@@ -17,7 +17,7 @@ RUN npm ci --legacy-peer-deps
 COPY . .
 
 # Build the Next.js application
-# RUN npm run build
+RUN npm run build
 
 # Prepare the production image
 FROM base AS production
