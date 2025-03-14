@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Arial:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Times+New+Roman:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Courier+New:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Garamond:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Georgia:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Verdana:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Trebuchet+MS:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rockwell:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Palatino:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Brush+Script+MT&display=swap');
+
+body, .word-editor-container {
+  font-family: Arial, sans-serif;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+table td, table th {
+  border: 1px solid #ccc;
+  padding: 6px;
+  text-align: left;
+}
+
+table th {
+  background-color: #f4f4f4;
+}
+
+/* Table Selector Styling */
+.table-selector-container {
+  display: flex;
+  align-items: center;
+}
+
+.table-selector-cols {
+  display: flex;
+}
+
+.table-selector-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 2px;
+}
+
+.table-selector-cell {
+  width: 20px;
+  height: 20px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+.table-selector-cell.selected {
+  background-color: blue;
+}

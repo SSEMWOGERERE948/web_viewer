@@ -7,11 +7,11 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Skeleton } from '@/components/ui/skeleton';
 import { PdfViewer } from '@/components/viewer/pdf-viewer';
 import { ImageViewer } from '@/components/viewer/image-viewer';
-import { OfficeViewer } from '@/components/viewer/office-viewer';
 import { ViewerToolbar } from '@/components/viewer/viewer-toolbar';
 import { AnnotationToolbar } from '@/components/viewer/annotation-toolbar';
 import { useToast } from '@/hooks/use-toast';
 import { ZoomIn, ZoomOut, RotateCw, Download, Share2, Printer } from 'lucide-react';
+import { OfficeViewer } from './office-viewer';
 
 interface DocumentViewerProps {
   documentUrl: string | null;
@@ -112,7 +112,7 @@ export function DocumentViewer({ documentUrl, documentType }: DocumentViewerProp
   const renderViewer = () => {
     if (!documentUrl) {
       return (
-        <div className="flex flex-col items-center justify-center h-[500px] text-center p-8">
+        <div className="flex flex-col items-center justify-center h-full w-full text-center p-8">
           <div className="mb-4">
             <FileIcon className="h-16 w-16 text-muted-foreground" />
           </div>
@@ -123,11 +123,11 @@ export function DocumentViewer({ documentUrl, documentType }: DocumentViewerProp
         </div>
       );
     }
-
+  
     if (isLoading) {
       return (
-        <div className="space-y-4 p-4">
-          <Skeleton className="h-[500px] w-full rounded-lg" />
+        <div className="flex flex-col space-y-4 p-4 h-full">
+          <Skeleton className="flex-1 w-full rounded-lg" />
           <div className="flex justify-between">
             <Skeleton className="h-10 w-20" />
             <Skeleton className="h-10 w-40" />
@@ -136,29 +136,30 @@ export function DocumentViewer({ documentUrl, documentType }: DocumentViewerProp
         </div>
       );
     }
-
+  
     switch (documentType) {
-      case 'pdf':
-        return <PdfViewer url={documentUrl} zoom={zoom} rotation={rotation} onPageChange={setCurrentPage} onTotalPagesChange={setTotalPages} />;
-      case 'image':
+      case "pdf":
+        return <PdfViewer url={documentUrl} />;
+      case "image":
         return <ImageViewer url={documentUrl} zoom={zoom} rotation={rotation} />;
-      case 'word':
-      case 'excel':
-      case 'powerpoint':
+      case "word":
+      case "excel":
+      case "powerpoint":
         return <OfficeViewer url={documentUrl} fileType={documentType} zoom={zoom} />;
       default:
         return (
-          <div className="flex flex-col items-center justify-center h-[500px]">
+          <div className="flex flex-col items-center justify-center h-full w-full">
             <p>Unsupported document type</p>
           </div>
         );
     }
   };
+  
 
   return (
-    <Card className="h-full">
-      <Tabs defaultValue="view">
-        <div className="flex justify-between items-center border-b px-4">
+    <Card className="flex flex-col h-full w-full">
+      <Tabs defaultValue="view" className="flex flex-col h-full">
+        <div className="flex justify-between items-center border-b px-4 shrink-0">
           <TabsList className="h-12">
             <TabsTrigger value="view">View</TabsTrigger>
             <TabsTrigger value="annotate">Annotate</TabsTrigger>
@@ -188,30 +189,30 @@ export function DocumentViewer({ documentUrl, documentType }: DocumentViewerProp
           </div>
         </div>
         
-        <TabsContent value="view" className="m-0">
+        <TabsContent value="view" className="flex flex-col flex-1 m-0">
           <ViewerToolbar 
             currentPage={currentPage} 
             totalPages={totalPages} 
             onPageChange={setCurrentPage} 
             documentUrl={documentUrl}
           />
-          <CardContent ref={viewerRef} className="p-0 overflow-auto h-[calc(100vh-250px)]">
+          <CardContent ref={viewerRef} className="flex-1 p-0 overflow-auto">
             {renderViewer()}
           </CardContent>
         </TabsContent>
         
-        <TabsContent value="annotate" className="m-0">
-          <AnnotationToolbar />
-          <CardContent className="p-0 overflow-auto h-[calc(100vh-250px)]">
+        <TabsContent value="annotate" className="flex flex-col flex-1 m-0">
+          <AnnotationToolbar/>
+          <CardContent className="flex-1 p-0 overflow-auto">
             {renderViewer()}
           </CardContent>
         </TabsContent>
         
-        <TabsContent value="form" className="m-0">
-          <div className="p-2 border-b">
+        <TabsContent value="form" className="flex flex-col flex-1 m-0">
+          <div className="p-2 border-b shrink-0">
             <p className="text-sm text-muted-foreground">Fill out form fields in the document</p>
           </div>
-          <CardContent className="p-0 overflow-auto h-[calc(100vh-250px)]">
+          <CardContent className="flex-1 p-0 overflow-auto">
             {renderViewer()}
           </CardContent>
         </TabsContent>
